@@ -7,163 +7,150 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="ตาใส">
-<title>ตาใส — คัดกรองต้อกระจก</title>
+<title>ตาใส — บันทึกข้อมูลคัดกรองตา</title>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --green:#0F6E56;--green2:#1D9E75;--green-l:#E1F5EE;--green-d:#04342C;
-  --amber:#BA7517;--amber-l:#FAEEDA;
-  --red:#A32D2D;--red-l:#FCEBEB;
-  --bg:#F4F7F5;--card:#fff;--border:#DDE8E3;
-  --text:#1a2e25;--muted:#6b8a7a;
+  --g:#0F6E56;--g2:#1D9E75;--gl:#E1F5EE;--gd:#04342C;
+  --am:#BA7517;--aml:#FAEEDA;
+  --rd:#A32D2D;--rdl:#FCEBEB;
+  --bg:#F4F7F5;--card:#fff;--bd:#DDE8E3;
+  --tx:#1a2e25;--mu:#6b8a7a;
 }
-html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Sarabun',sans-serif;color:var(--text);font-size:15px}
-#app{height:100%;display:flex;flex-direction:column;max-width:480px;margin:0 auto;background:#fff;position:relative;overflow:hidden}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Sarabun',sans-serif;color:var(--tx);font-size:15px}
+#app{height:100%;display:flex;flex-direction:column;max-width:480px;margin:0 auto;background:#fff;overflow:hidden}
 
-/* ── HEADER ── */
-.hdr{background:var(--green);padding:env(safe-area-inset-top,12px) 16px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0;min-height:58px}
+
+/* HEADER */
+.hdr{background:var(--g);padding:env(safe-area-inset-top,10px) 16px 11px;display:flex;align-items:center;gap:10px;flex-shrink:0}
 .hdr-ico{width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hdr-title{font-size:17px;font-weight:700;color:#fff;line-height:1.2}
+.hdr h1{font-size:17px;font-weight:700;color:#fff;line-height:1.2}
 .hdr-sub{font-size:11px;color:rgba(255,255,255,.65)}
-.steps{display:flex;gap:5px;align-items:center;margin-left:auto}
-.sdot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);transition:.3s}
-.sdot.on{background:#fff;width:18px;border-radius:4px}
-.sdot.done{background:rgba(255,255,255,.6)}
 
-/* ── SCREENS ── */
+
+/* SCREENS */
 .scr{display:none;flex:1;flex-direction:column;overflow:hidden}
-.scr.active{display:flex}
-.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 8px}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.scr.active{animation:fadeUp .3s ease}
+.scr.active{display:flex;animation:fu .3s ease}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 6px}
 
-/* ── CARDS ── */
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}
-.ctitle{font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:11px;display:flex;align-items:center;gap:6px}
-.ctitle svg{width:14px;height:14px}
 
-/* ── SETTINGS CARD ── */
-.cfg-row{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
-.cfg-label{font-size:12px;color:var(--muted);font-weight:500}
-.cfg-input{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:10px;font-family:'Sarabun',sans-serif;font-size:13px;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
-.cfg-input:focus{border-color:var(--green2)}
-.cfg-hint{font-size:11px;color:var(--muted);line-height:1.5;padding:8px 10px;background:var(--bg);border-radius:8px;margin-top:4px}
-.cfg-hint a{color:var(--green);font-weight:600;text-decoration:none}
+/* CARD */
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.ct{font-size:12px;font-weight:700;color:var(--g);text-transform:uppercase;letter-spacing:.06em;margin-bottom:11px;display:flex;align-items:center;gap:6px}
+.ct svg{width:14px;height:14px}
 
-/* ── FORM ── */
+
+/* FORM */
 .fg{margin-bottom:10px}
-.fl{font-size:12px;color:var(--muted);margin-bottom:4px;display:block;font-weight:500}
-.fi{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:10px;font-family:'Sarabun',sans-serif;font-size:14px;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
-.fi:focus{border-color:var(--green2)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.cbox-grp{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
-.cbox-item{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:5px 10px;cursor:pointer;font-size:13px;transition:.2s;user-select:none}
-.cbox-item input{accent-color:var(--green);cursor:pointer}
-.cbox-item:has(input:checked){background:var(--green-l);border-color:var(--green2);color:var(--green-d);font-weight:500}
+.fl{font-size:12px;color:var(--mu);margin-bottom:4px;display:block;font-weight:500}
+.fi{width:100%;padding:9px 11px;border:1.5px solid var(--bd);border-radius:10px;font-family:'Sarabun',sans-serif;font-size:14px;color:var(--tx);background:#fff;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.fi:focus{border-color:var(--g2)}
+textarea.fi{resize:none;height:72px;line-height:1.5}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cb-grp{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.cb{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--bd);border-radius:20px;padding:5px 10px;cursor:pointer;font-size:13px;transition:.2s;user-select:none}
+.cb input{accent-color:var(--g);cursor:pointer}
+.cb:has(input:checked){background:var(--gl);border-color:var(--g2);color:var(--gd);font-weight:500}
 
-/* ── EYE CAPTURE ── */
+
+/* EYE */
 .eye-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.eye-card{display:block;border:1.5px dashed var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s;position:relative;-webkit-user-select:none;user-select:none;text-decoration:none}
-.eye-card.ok{border-style:solid;border-color:var(--green2)}
-.eye-hdr{background:var(--bg);padding:6px;text-align:center;font-size:12px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border)}
-.eye-card.ok .eye-hdr{background:var(--green-l);color:var(--green)}
-.eye-prev{height:105px;background:#060a08;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.eye-card{display:block;border:1.5px dashed var(--bd);border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s;position:relative;-webkit-user-select:none;user-select:none;text-decoration:none}
+.eye-card.ok{border-style:solid;border-color:var(--g2)}
+.eye-hdr{background:var(--bg);padding:7px;text-align:center;font-size:12px;font-weight:600;color:var(--mu);border-bottom:1px solid var(--bd)}
+.eye-card.ok .eye-hdr{background:var(--gl);color:var(--g)}
+.eye-prev{height:110px;background:#060a08;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
 .eye-prev img{width:100%;height:100%;object-fit:cover}
-.eye-ph{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px}
-.eye-ph svg{width:26px;height:26px;color:var(--muted);opacity:.7}
-.eye-ph span{font-size:11px;color:var(--muted);text-align:center;line-height:1.4}
-.eye-badge{position:absolute;bottom:5px;right:5px;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700}
-.eye-badge.ok{background:rgba(15,110,86,.9);color:#fff}
+.eye-ph{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px}
+.eye-ph svg{width:26px;height:26px;color:var(--mu);opacity:.7}
+.eye-ph span{font-size:11px;color:var(--mu);text-align:center;line-height:1.4}
+.ebadge{position:absolute;bottom:5px;right:5px;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;background:rgba(15,110,86,.88);color:#fff}
 input[type=file]{display:none}
 
-/* ── ANALYZING ── */
-.ana-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px 20px}
-.ana-center{text-align:center;margin-bottom:22px}
-.ana-ring{width:70px;height:70px;border-radius:50%;background:var(--green-l);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;animation:pulse 2s infinite}
+
+/* SENDING SCREEN */
+.send-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:28px 24px;text-align:center}
+.send-ring{width:72px;height:72px;border-radius:50%;background:var(--gl);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.9)}}
-.ana-title{font-size:18px;font-weight:700;margin-bottom:6px}
-.ana-sub{font-size:13px;color:var(--muted)}
-.step-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bg)}
-.step-item:last-child{border:none}
-.step-ico{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.3s}
-.step-ico.wait{background:var(--border)}
-.step-ico.run{background:var(--amber-l);animation:pulse 1s infinite}
-.step-ico.done-ico{background:var(--green)}
-.step-txt{font-size:13px}
+.send-title{font-size:18px;font-weight:700;margin-bottom:6px}
+.send-sub{font-size:13px;color:var(--mu);line-height:1.6}
+.prog-bar{width:100%;height:6px;background:var(--bd);border-radius:3px;overflow:hidden;margin-top:20px}
+.prog-fill{height:100%;background:var(--g2);border-radius:3px;transition:width .5s ease;width:0%}
+.prog-lbl{font-size:12px;color:var(--mu);margin-top:6px}
 
-/* ── RESULT ── */
-.rbox{border-radius:12px;padding:13px;margin-bottom:9px}
-.rbox.normal{background:var(--green-l);border:1px solid #9FE1CB}
-.rbox.suspect{background:var(--amber-l);border:1px solid #FAC775}
-.rbox.high{background:var(--red-l);border:1px solid #F09595}
-.rbox.not_eye{background:var(--bg);border:1px solid var(--border)}
-.r-eye-lbl{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
-.r-status{font-size:15px;font-weight:700;margin-bottom:3px}
-.r-status.normal{color:var(--green-d)}
-.r-status.suspect{color:#633806}
-.r-status.high{color:var(--red)}
-.r-status.not_eye{color:var(--muted)}
-.r-detail{font-size:13px;line-height:1.6}
-.conf-bar{height:5px;background:rgba(0,0,0,.08);border-radius:3px;margin-top:8px;overflow:hidden}
-.conf-fill{height:100%;border-radius:3px;transition:width 1.2s ease}
-.conf-fill.normal{background:var(--green2)}
-.conf-fill.suspect{background:var(--amber)}
-.conf-fill.high{background:var(--red)}
-.conf-lbl{font-size:11px;color:var(--muted);margin-top:3px}
 
-.rec-box{background:var(--text);border-radius:12px;padding:15px;color:#fff;margin-bottom:10px}
-.rec-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.5);margin-bottom:6px}
-.rec-main{font-size:15px;font-weight:700;line-height:1.5}
-.rec-sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;line-height:1.6}
+/* SUCCESS SCREEN */
+.suc-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:28px 20px;text-align:center}
+.suc-ico{width:72px;height:72px;border-radius:50%;background:var(--gl);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.suc-title{font-size:20px;font-weight:700;color:var(--gd);margin-bottom:8px}
+.suc-sub{font-size:13px;color:var(--mu);line-height:1.7;margin-bottom:20px}
+.summary-box{background:var(--bg);border-radius:12px;padding:14px;width:100%;text-align:left;margin-bottom:16px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.sum-row:last-child{border:none}
+.sum-lbl{color:var(--mu)}
+.sum-val{font-weight:600;color:var(--tx)}
 
-/* ── HISTORY ── */
+
+/* HISTORY */
 .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 .stat-c{background:var(--bg);border-radius:10px;padding:11px;text-align:center}
-.stat-n{font-size:22px;font-weight:800;color:var(--green)}
-.stat-l{font-size:11px;color:var(--muted);margin-top:1px}
+.stat-n{font-size:22px;font-weight:800;color:var(--g)}
+.stat-l{font-size:11px;color:var(--mu);margin-top:1px}
 .hi{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--bg)}
 .hi:last-child{border:none}
-.hi-av{width:38px;height:38px;border-radius:50%;background:var(--green-l);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--green);flex-shrink:0}
+.hi-av{width:38px;height:38px;border-radius:50%;background:var(--gl);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--g);flex-shrink:0}
 .hi-name{font-size:14px;font-weight:700}
-.hi-sub{font-size:12px;color:var(--muted)}
+.hi-sub{font-size:12px;color:var(--mu)}
 .pill{padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
-.pill-ok{background:var(--green-l);color:var(--green-d)}
-.pill-warn{background:var(--amber-l);color:#633806}
-.pill-ref{background:var(--red-l);color:var(--red)}
-.gs-status{font-size:11px;margin-top:2px;display:flex;align-items:center;gap:4px}
-.gs-dot{width:6px;height:6px;border-radius:50%}
+.p-sent{background:var(--gl);color:var(--gd)}
+.p-fail{background:var(--rdl);color:var(--rd)}
+.p-pend{background:var(--aml);color:#633806}
 
-/* ── BUTTONS ── */
+
+/* SETTINGS */
+.cfg-row{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.cfg-lbl{font-size:12px;color:var(--mu);font-weight:500}
+.cfg-inp{width:100%;padding:9px 11px;border:1.5px solid var(--bd);border-radius:10px;font-family:'Sarabun',sans-serif;font-size:13px;color:var(--tx);background:#fff;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.cfg-inp:focus{border-color:var(--g2)}
+.cfg-hint{font-size:11px;color:var(--mu);line-height:1.6;padding:8px 10px;background:var(--bg);border-radius:8px;margin-top:4px}
+.cfg-hint a{color:var(--g);font-weight:600;text-decoration:none}
+.gas-box{font-size:10.5px;background:#f8fff4;border:1px solid #c5e4a0;border-radius:8px;padding:10px;overflow-x:auto;line-height:1.6;color:#2a4a10;white-space:pre-wrap;word-break:break-all;cursor:pointer;margin-top:6px;max-height:180px;overflow-y:auto}
+
+
+/* BUTTONS */
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border-radius:12px;font-family:'Sarabun',sans-serif;font-size:15px;font-weight:700;cursor:pointer;border:none;transition:all .18s;width:100%;-webkit-appearance:none}
 .btn:active{transform:scale(.97)}
-.btn-green{background:var(--green);color:#fff}
-.btn-red{background:var(--red);color:#fff}
-.btn-outline{background:transparent;color:var(--green);border:1.5px solid var(--green)}
-.btn-gray{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+.btn-g{background:var(--g);color:#fff}
+.btn-o{background:transparent;color:var(--g);border:1.5px solid var(--g)}
+.btn-gray{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
 .btn svg{width:16px;height:16px;flex-shrink:0}
 
-.bot-act{padding:10px 14px calc(env(safe-area-inset-bottom,8px) + 10px);background:#fff;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;flex-shrink:0}
 
-/* ── NAV ── */
-.nav{display:flex;background:#fff;border-top:1px solid var(--border);padding:6px 0 calc(env(safe-area-inset-bottom,4px) + 2px);flex-shrink:0}
-.nbtn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;cursor:pointer;border:none;background:none;font-family:'Sarabun',sans-serif;font-size:10px;color:var(--muted);transition:color .2s}
-.nbtn.active{color:var(--green)}
-.nbtn svg{width:20px;height:20px}
+.bot{padding:10px 14px calc(env(safe-area-inset-bottom,8px) + 10px);background:#fff;border-top:1px solid var(--bd);display:flex;flex-direction:column;gap:8px;flex-shrink:0}
 
-/* ── MISC ── */
-.sec-hdr{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;margin-top:2px}
-.info-box{background:var(--green-l);border-radius:10px;padding:10px 12px;display:flex;gap:8px;margin-bottom:10px}
-.info-box svg{width:15px;height:15px;color:var(--green);flex-shrink:0;margin-top:2px}
-.info-box p{font-size:12px;color:var(--green-d);line-height:1.6}
+
+/* NAV */
+.nav{display:flex;background:#fff;border-top:1px solid var(--bd);padding:6px 0 calc(env(safe-area-inset-bottom,4px) + 2px);flex-shrink:0}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;cursor:pointer;border:none;background:none;font-family:'Sarabun',sans-serif;font-size:10px;color:var(--mu);transition:color .2s}
+.nb.active{color:var(--g)}
+.nb svg{width:20px;height:20px}
+
+
+/* MISC */
+.info-box{background:var(--gl);border-radius:10px;padding:10px 12px;display:flex;gap:8px;margin-bottom:10px}
+.info-box svg{width:15px;height:15px;color:var(--g);flex-shrink:0;margin-top:2px}
+.info-box p{font-size:12px;color:var(--gd);line-height:1.6}
+.sec-hdr{font-size:11px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;margin-top:2px}
 .ldots{display:inline-flex;gap:4px}
 .ldots span{width:5px;height:5px;border-radius:50%;background:currentColor;animation:ld 1.2s infinite}
 .ldots span:nth-child(2){animation-delay:.2s}
 .ldots span:nth-child(3){animation-delay:.4s}
 @keyframes ld{0%,60%,100%{opacity:.3;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:9px 18px;border-radius:25px;font-size:13px;font-weight:600;z-index:100;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a2e25;color:#fff;padding:9px 18px;border-radius:25px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center}
 .toast.show{opacity:1}
-.empty-state{text-align:center;padding:28px 16px;color:var(--muted)}
+.empty-state{text-align:center;padding:28px 16px;color:var(--mu)}
 .empty-state svg{width:42px;height:42px;opacity:.35;margin-bottom:10px}
 .empty-state p{font-size:13px;line-height:1.6}
 </style>
@@ -171,316 +158,327 @@ input[type=file]{display:none}
 <body>
 <div id="app">
 
-  <!-- HEADER -->
-  <div class="hdr">
-    <div class="hdr-ico">
-      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
-    </div>
-    <div>
-      <div class="hdr-title">ตาใส</div>
-      <div class="hdr-sub" id="hdrSub">คัดกรองต้อกระจก อสม.</div>
-    </div>
-    <div class="steps" id="stepBar">
-      <div class="sdot on" id="d0"></div>
-      <div class="sdot" id="d1"></div>
-      <div class="sdot" id="d2"></div>
-    </div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-ico">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
   </div>
+  <div>
+    <h1>ตาใส</h1>
+    <div class="hdr-sub" id="hdrSub">บันทึกข้อมูลคัดกรองตา</div>
+  </div>
+</div>
 
-  <!-- ═══════════════════════════════ SCREEN: SETTINGS ══ -->
-  <div class="scr" id="scr-settings">
-    <div class="scroll">
-      <div class="info-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <p>ตั้งค่าครั้งแรกก่อนใช้งาน กรอก URL ของ Google Sheets Web App และ Anthropic API Key</p>
+
+<!-- ══════════ SCREEN: FORM ══════════ -->
+<div class="scr active" id="scr-form">
+  <div class="scroll">
+    <div class="info-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <p>กรอกข้อมูลและถ่ายภาพดวงตา กดบันทึกเพื่อส่งข้อมูลไป Google Sheets</p>
+    </div>
+
+
+    <div class="card">
+      <div class="ct">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        ข้อมูลผู้รับการคัดกรอง
       </div>
-
-      <div class="card">
-        <div class="ctitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Google Sheets
+      <div class="fg"><label class="fl">ชื่อ-นามสกุล *</label><input class="fi" id="pName" placeholder="เช่น นางสมศรี ใจดี" autocomplete="name"></div>
+      <div class="r2">
+        <div class="fg"><label class="fl">อายุ (ปี) *</label><input class="fi" id="pAge" type="number" min="1" max="120" placeholder="เช่น 68" inputmode="numeric"></div>
+        <div class="fg"><label class="fl">เพศ *</label>
+          <select class="fi" id="pGender"><option value="">-- เลือก --</option><option>ชาย</option><option>หญิง</option></select>
         </div>
-        <div class="cfg-row">
-          <label class="cfg-label">Google Apps Script Web App URL</label>
-          <input class="cfg-input" id="cfgSheet" placeholder="https://script.google.com/macros/s/..." type="url">
-          <div class="cfg-hint">
-            วิธีตั้งค่า: เปิด Google Sheets → Extensions → Apps Script → วางโค้ด GAS ด้านล่าง → Deploy → Web App → Copy URL<br><br>
-            <strong>ตั้ง "Who has access" เป็น Anyone</strong>
+      </div>
+      <div class="fg"><label class="fl">เลขบัตรประชาชน</label><input class="fi" id="pID" placeholder="x-xxxx-xxxxx-xx-x" maxlength="17" inputmode="numeric"></div>
+      <div class="fg"><label class="fl">เบอร์โทรศัพท์</label><input class="fi" id="pPhone" type="tel" placeholder="081-234-5678"></div>
+    </div>
+
+
+    <div class="card">
+      <div class="ct">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        โรคประจำตัว
+      </div>
+      <div class="cb-grp">
+        <label class="cb"><input type="checkbox" value="เบาหวาน"> เบาหวาน</label>
+        <label class="cb"><input type="checkbox" value="ความดันโลหิตสูง"> ความดันโลหิตสูง</label>
+        <label class="cb"><input type="checkbox" value="ต้อหิน"> ต้อหิน</label>
+        <label class="cb"><input type="checkbox" value="ต้อกระจก (เคยผ่าตัด)"> ต้อกระจก (เคยผ่าตัด)</label>
+        <label class="cb"><input type="checkbox" value="ตาเจ็บ/ตาแดงบ่อย"> ตาเจ็บ/ตาแดงบ่อย</label>
+        <label class="cb"><input type="checkbox" value="ไม่มีโรคประจำตัว"> ไม่มี</label>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="ct">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        อาการทางตา
+      </div>
+      <div class="cb-grp">
+        <label class="cb"><input type="checkbox" value="ตามัว"> ตามัว</label>
+        <label class="cb"><input type="checkbox" value="มองไม่ชัด"> มองไม่ชัด</label>
+        <label class="cb"><input type="checkbox" value="เห็นแสงจ้า/แสงรุ้ง"> เห็นแสงจ้า/แสงรุ้ง</label>
+        <label class="cb"><input type="checkbox" value="เห็นภาพซ้อน"> เห็นภาพซ้อน</label>
+        <label class="cb"><input type="checkbox" value="ตาแดง/เจ็บตา"> ตาแดง/เจ็บตา</label>
+        <label class="cb"><input type="checkbox" value="ไม่มีอาการ"> ไม่มีอาการ</label>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="ct">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="14" r="3"/><path d="M12 7h.01"/></svg>
+        ถ่ายภาพดวงตา
+      </div>
+      <p style="font-size:11px;color:var(--mu);margin-bottom:10px;line-height:1.6">ถ่ายในที่แสงสลัว ระยะ 30-50 ซม. <strong>เปิดแฟลช</strong> เพื่อให้เห็นรูม่านตาชัด</p>
+      <div class="eye-grid">
+        <label class="eye-card" id="ecL" for="fL">
+          <div class="eye-hdr">👁 ตาซ้าย</div>
+          <div class="eye-prev" id="epL">
+            <div class="eye-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>แตะเพื่อถ่าย / เลือกรูป</span></div>
           </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="ctitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Anthropic API Key
-        </div>
-        <div class="cfg-row">
-          <label class="cfg-label">API Key</label>
-          <input class="cfg-input" id="cfgKey" placeholder="sk-ant-..." type="password">
-          <div class="cfg-hint">
-            รับ API Key ได้ที่ <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a><br>
-            เก็บไว้ในเครื่องนี้เท่านั้น ไม่มีการส่งไปที่อื่น
+          <input type="file" id="fL" accept="image/*" onchange="loadEye(event,'L')">
+        </label>
+        <label class="eye-card" id="ecR" for="fR">
+          <div class="eye-hdr">👁 ตาขวา</div>
+          <div class="eye-prev" id="epR">
+            <div class="eye-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>แตะเพื่อถ่าย / เลือกรูป</span></div>
           </div>
-        </div>
+          <input type="file" id="fR" accept="image/*" onchange="loadEye(event,'R')">
+        </label>
       </div>
-
-      <div class="card">
-        <div class="ctitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          ข้อมูล อสม.
-        </div>
-        <div class="cfg-row">
-          <label class="cfg-label">ชื่อ อสม. ผู้คัดกรอง</label>
-          <input class="cfg-input" id="cfgWorker" placeholder="เช่น นางสาวมาลี สุขใจ">
-        </div>
-        <div class="cfg-row">
-          <label class="cfg-label">หมู่บ้าน / ชุมชน</label>
-          <input class="cfg-input" id="cfgVillage" placeholder="เช่น บ้านสันติสุข หมู่ 3">
-        </div>
-      </div>
-
-      <div class="card" style="background:#f8fdf0;border-color:#c5e4a0">
-        <div class="ctitle" style="color:#2d6a00">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          โค้ด Google Apps Script (GAS)
-        </div>
-        <p style="font-size:11px;color:#4a7a1a;line-height:1.7;margin-bottom:8px">คัดลอกโค้ดนี้ไปวางใน Apps Script:</p>
-        <pre id="gasCode" style="font-size:10px;background:#fff;border:1px solid #c5e4a0;border-radius:8px;padding:10px;overflow-x:auto;line-height:1.5;color:#333;white-space:pre-wrap;word-break:break-all;cursor:pointer" onclick="copyGAS()" title="แตะเพื่อคัดลอก"></pre>
-        <button class="btn btn-gray" style="margin-top:8px;font-size:12px;padding:8px" onclick="copyGAS()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          คัดลอกโค้ด GAS
-        </button>
-      </div>
+      <p style="font-size:11px;color:var(--mu);margin-top:8px;text-align:center">* ถ่ายอย่างน้อย 1 ตา</p>
     </div>
-    <div class="bot-act">
-      <button class="btn btn-green" onclick="saveSettings()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        บันทึกและเริ่มใช้งาน
-      </button>
+
+
+    <div class="card">
+      <div class="ct">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        หมายเหตุ
+      </div>
+      <textarea class="fi" id="pNote" placeholder="บันทึกเพิ่มเติม เช่น ลักษณะดวงตาที่สังเกตได้ หรือข้อมูลอื่นๆ..."></textarea>
     </div>
   </div>
-
-  <!-- ═══════════════════════════════ SCREEN: FORM ══ -->
-  <div class="scr active" id="scr-form">
-    <div class="scroll">
-      <div class="info-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <p>กรอกข้อมูลและถ่ายภาพดวงตา จากนั้น AI จะวิเคราะห์และบันทึกลง Google Sheets อัตโนมัติ</p>
-      </div>
-
-      <div class="card">
-        <div class="ctitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          ข้อมูลผู้รับการคัดกรอง
-        </div>
-        <div class="fg"><label class="fl">ชื่อ-นามสกุล *</label><input class="fi" id="pName" placeholder="เช่น นางสมศรี ใจดี" autocomplete="name"></div>
-        <div class="row2">
-          <div class="fg"><label class="fl">อายุ (ปี) *</label><input class="fi" id="pAge" type="number" min="1" max="120" placeholder="เช่น 68" inputmode="numeric"></div>
-          <div class="fg"><label class="fl">เพศ *</label>
-            <select class="fi" id="pGender"><option value="">-- เลือก --</option><option>ชาย</option><option>หญิง</option></select>
-          </div>
-        </div>
-        <div class="fg"><label class="fl">เลขบัตรประชาชน (ถ้ามี)</label><input class="fi" id="pID" placeholder="x-xxxx-xxxxx-xx-x" maxlength="17" inputmode="numeric"></div>
-        <div class="fg"><label class="fl">เบอร์โทรศัพท์</label><input class="fi" id="pPhone" type="tel" placeholder="081-234-5678"></div>
-      </div>
-
-      <div class="card">
-        <div class="ctitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          โรคประจำตัว
-        </div>
-        <div class="cbox-grp">
-          <label class="cbox-item"><input type="checkbox" value="เบาหวาน"> เบาหวาน</label>
-          <label class="cbox-item"><input type="checkbox" value="ความดันโลหิตสูง"> ความดันโลหิตสูง</label>
-          <label class="cbox-item"><input type="checkbox" value="ต้อหิน"> ต้อหิน</label>
-          <label class="cbox-item"><input type="checkbox" value="ต้อกระจก (เคยผ่าตัด)"> ต้อกระจก (เคยผ่าตัด)</label>
-          <label class="cbox-item"><input type="checkbox" value="ตาเจ็บ/ตาแดงบ่อย"> ตาเจ็บ/ตาแดงบ่อย</label>
-          <label class="cbox-item"><input type="checkbox" value="ไม่มีโรคประจำตัว"> ไม่มีโรคประจำตัว</label>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="ctitle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="14" r="3"/><path d="M12 7h.01"/></svg>
-          ถ่ายภาพดวงตา
-        </div>
-        <p style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.6">ถ่ายในที่แสงสลัว ระยะ 30-50 ซม. <strong>เปิดแฟลช</strong> เพื่อดู red reflex</p>
-        <div class="eye-grid">
-          <label class="eye-card" id="ecL" for="fL" style="cursor:pointer;display:block">
-            <div class="eye-hdr">👁 ตาซ้าย</div>
-            <div class="eye-prev" id="epL">
-              <div class="eye-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>แตะเพื่อถ่าย / อัปโหลด</span></div>
-            </div>
-            <input type="file" id="fL" accept="image/*" onchange="loadEye(event,'L')" style="display:none">
-          </label>
-          <label class="eye-card" id="ecR" for="fR" style="cursor:pointer;display:block">
-            <div class="eye-hdr">👁 ตาขวา</div>
-            <div class="eye-prev" id="epR">
-              <div class="eye-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>แตะเพื่อถ่าย / อัปโหลด</span></div>
-            </div>
-            <input type="file" id="fR" accept="image/*" onchange="loadEye(event,'R')" style="display:none">
-          </label>
-        </div>
-        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center">* ต้องถ่ายอย่างน้อย 1 ตา</p>
-      </div>
-    </div>
-    <div class="bot-act">
-      <button class="btn btn-green" onclick="analyze()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        วิเคราะห์ด้วย AI
-      </button>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════ SCREEN: ANALYZING ══ -->
-  <div class="scr" id="scr-analyzing">
-    <div class="ana-wrap">
-      <div class="ana-center">
-        <div class="ana-ring">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
-        </div>
-        <div class="ana-title">กำลังวิเคราะห์</div>
-        <div class="ana-sub" id="anaStatus">ประมวลผลภาพดวงตา<span class="ldots"><span></span><span></span><span></span></span></div>
-      </div>
-      <div class="card">
-        <div class="step-item">
-          <div class="step-ico done-ico" id="s1i"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span class="step-txt">เตรียมข้อมูลและภาพ</span>
-        </div>
-        <div class="step-item">
-          <div class="step-ico wait" id="s2i"><div style="width:8px;height:8px;border-radius:50%;background:var(--muted)"></div></div>
-          <span class="step-txt">ส่งภาพไปยัง Claude AI</span>
-        </div>
-        <div class="step-item">
-          <div class="step-ico wait" id="s3i"><div style="width:8px;height:8px;border-radius:50%;background:var(--muted)"></div></div>
-          <span class="step-txt">บันทึกผลลง Google Sheets</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════ SCREEN: RESULT ══ -->
-  <div class="scr" id="scr-result">
-    <div class="scroll">
-      <div class="sec-hdr">ผู้รับการคัดกรอง</div>
-      <div class="card" style="padding:11px 13px;margin-bottom:10px">
-        <div style="display:flex;align-items:center;gap:11px">
-          <div style="width:42px;height:42px;border-radius:50%;background:var(--green-l);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--green);flex-shrink:0" id="rAv">?</div>
-          <div style="flex:1">
-            <div style="font-size:15px;font-weight:700" id="rName">-</div>
-            <div style="font-size:12px;color:var(--muted)" id="rInfo">-</div>
-          </div>
-          <div id="rGs" class="gs-status"></div>
-        </div>
-      </div>
-
-      <div class="sec-hdr">ผลวิเคราะห์ AI</div>
-      <div id="rResults"></div>
-
-      <div class="sec-hdr">คำแนะนำ</div>
-      <div class="rec-box" id="rRec">
-        <div class="rec-title">คำแนะนำ</div>
-        <div class="rec-main" id="rRecMain">-</div>
-        <div class="rec-sub" id="rRecSub">-</div>
-      </div>
-
-      <div id="rImgSec" style="margin-bottom:12px">
-        <div class="sec-hdr">ภาพที่วิเคราะห์</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="rImgs"></div>
-      </div>
-
-      <div style="font-size:11px;color:var(--muted);text-align:center;line-height:1.7;padding:4px 0 8px">
-        ⚠️ ผลนี้เป็นการคัดกรองเบื้องต้นเท่านั้น<br>การวินิจฉัยจริงต้องผ่านจักษุแพทย์เสมอ
-      </div>
-    </div>
-    <div class="bot-act">
-      <button class="btn btn-red" id="btnRef" onclick="refer()" style="display:none">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 3.08 3.33 2 2 0 0 1 5.06 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.9.7 2.81a2 2 0 0 1-.45 2.11L9.09 6.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 23 15z"/></svg>
-        ส่งต่อพบจักษุแพทย์
-      </button>
-      <button class="btn btn-outline" onclick="reset()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.57"/></svg>
-        คัดกรองรายถัดไป
-      </button>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════ SCREEN: HISTORY ══ -->
-  <div class="scr" id="scr-hist">
-    <div class="scroll">
-      <div class="stat-grid">
-        <div class="stat-c"><div class="stat-n" id="stTotal">0</div><div class="stat-l">คัดกรองทั้งหมด</div></div>
-        <div class="stat-c"><div class="stat-n" style="color:var(--amber)" id="stSusp">0</div><div class="stat-l">สงสัยต้อกระจก</div></div>
-        <div class="stat-c"><div class="stat-n" style="color:var(--red)" id="stRef">0</div><div class="stat-l">ส่งต่อแล้ว</div></div>
-      </div>
-      <div class="card" id="histList">
-        <div class="empty-state">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <p>ยังไม่มีประวัติการคัดกรอง<br>ข้อมูลจะบันทึกลง Google Sheets อัตโนมัติ</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BOTTOM NAV -->
-  <div class="nav" id="bottomNav">
-    <button class="nbtn active" id="n0" onclick="goNav(0)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
-      คัดกรอง
-    </button>
-    <button class="nbtn" id="n1" onclick="goNav(1)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      ประวัติ
-    </button>
-    <button class="nbtn" id="n2" onclick="goNav(2)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-      ตั้งค่า
+  <div class="bot">
+    <button class="btn btn-g" onclick="submitForm()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v14a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      บันทึกและส่งข้อมูล
     </button>
   </div>
 </div>
 
-<!-- TOAST -->
+
+<!-- ══════════ SCREEN: SENDING ══════════ -->
+<div class="scr" id="scr-sending">
+  <div class="send-wrap">
+    <div class="send-ring">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--g)" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+    </div>
+    <div class="send-title" id="sendTitle">กำลังส่งข้อมูล</div>
+    <div class="send-sub" id="sendSub">กรุณารอสักครู่<span class="ldots"><span></span><span></span><span></span></span></div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+    <div class="prog-lbl" id="progLbl">0%</div>
+  </div>
+</div>
+
+
+<!-- ══════════ SCREEN: SUCCESS ══════════ -->
+<div class="scr" id="scr-success">
+  <div class="suc-wrap">
+    <div class="suc-ico">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--g)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="suc-title">บันทึกสำเร็จ!</div>
+    <div class="suc-sub" id="sucSub">ข้อมูลถูกส่งไปยัง Google Sheets แล้ว<br>พยาบาลสามารถเปิดดูและวิเคราะห์ได้</div>
+    <div class="summary-box" id="sucSummary"></div>
+    <button class="btn btn-g" onclick="resetForm()" style="width:100%">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.57"/></svg>
+      บันทึกรายถัดไป
+    </button>
+  </div>
+</div>
+
+
+<!-- ══════════ SCREEN: HISTORY ══════════ -->
+<div class="scr" id="scr-hist">
+  <div class="scroll">
+    <div class="stat-grid">
+      <div class="stat-c"><div class="stat-n" id="stTotal">0</div><div class="stat-l">บันทึกทั้งหมด</div></div>
+      <div class="stat-c"><div class="stat-n" style="color:var(--g2)" id="stSent">0</div><div class="stat-l">ส่งสำเร็จ</div></div>
+      <div class="stat-c"><div class="stat-n" style="color:var(--am)" id="stFail">0</div><div class="stat-l">รอส่งซ้ำ</div></div>
+    </div>
+    <div id="retryBanner" style="display:none;margin-bottom:10px">
+      <button class="btn btn-g" onclick="retryFailed()" style="font-size:13px;padding:10px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.57"/></svg>
+        ส่งข้อมูลที่ค้างอยู่ทั้งหมด
+      </button>
+    </div>
+    <div class="card" id="histList">
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <p>ยังไม่มีข้อมูล<br>กดบันทึกในหน้าแรกเพื่อเริ่มต้น</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ SCREEN: SETTINGS ══════════ -->
+<div class="scr" id="scr-cfg">
+  <div class="scroll">
+    <div class="info-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <p>ตั้งค่าก่อนใช้งาน วาง Google Apps Script URL เพื่อให้ข้อมูลส่งไปยัง Google Sheets อัตโนมัติ</p>
+    </div>
+
+
+    <div class="card">
+      <div class="ct">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Google Sheets
+      </div>
+      <div class="cfg-row">
+        <label class="cfg-lbl">Apps Script Web App URL</label>
+        <input class="cfg-inp" id="cfgSheet" placeholder="https://script.google.com/macros/s/..." type="url">
+        <div class="cfg-hint">วาง URL จาก Google Apps Script ที่ Deploy เป็น Web App<br><strong>ตั้ง "Who has access" เป็น Anyone</strong></div>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="ct">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        ข้อมูล อสม.
+      </div>
+      <div class="cfg-row">
+        <label class="cfg-lbl">ชื่อ อสม. ผู้บันทึก</label>
+        <input class="cfg-inp" id="cfgWorker" placeholder="เช่น นางสาวมาลี สุขใจ">
+      </div>
+      <div class="cfg-row">
+        <label class="cfg-lbl">หมู่บ้าน / ชุมชน</label>
+        <input class="cfg-inp" id="cfgVillage" placeholder="เช่น บ้านสันติสุข หมู่ 3">
+      </div>
+    </div>
+
+
+    <div class="card" style="background:#f8fff4;border-color:#c5e4a0">
+      <div class="ct" style="color:#2d6a00">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        โค้ด Google Apps Script
+      </div>
+      <p style="font-size:11px;color:#4a7a1a;margin-bottom:6px;line-height:1.6">คัดลอกไปวางใน Apps Script แล้ว Deploy เป็น Web App:</p>
+      <div class="gas-box" id="gasCode" onclick="copyGAS()" title="แตะเพื่อคัดลอก"></div>
+      <button class="btn btn-gray" style="margin-top:8px;font-size:12px;padding:9px" onclick="copyGAS()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        คัดลอกโค้ด GAS
+      </button>
+    </div>
+  </div>
+  <div class="bot">
+    <button class="btn btn-g" onclick="saveCfg()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      บันทึกการตั้งค่า
+    </button>
+  </div>
+</div>
+
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nb active" id="n0" onclick="goNav(0)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    บันทึก
+  </button>
+  <button class="nb" id="n1" onclick="goNav(1)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    ประวัติ
+  </button>
+  <button class="nb" id="n2" onclick="goNav(2)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+    ตั้งค่า
+  </button>
+</div>
+</div><!-- /app -->
+
+
 <div class="toast" id="toast"></div>
 
+
 <script>
-// ════════════════════════════════════════════════════
-// GAS CODE (shown in settings)
-// ════════════════════════════════════════════════════
-const GAS_CODE = `function doPost(e) {
+// ════════════════════════════════
+// GAS CODE
+// ════════════════════════════════
+const GAS = `function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName("คัดกรอง") || ss.insertSheet("คัดกรอง");
-    
+
+
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        "วันที่/เวลา","ชื่อ-สกุล","อายุ","เพศ",
-        "เลขบัตร","เบอร์โทร","โรคประจำตัว",
-        "ผล ตาซ้าย","ความเชื่อมั่น ตาซ้าย","รายละเอียด ตาซ้าย",
-        "ผล ตาขวา","ความเชื่อมั่น ตาขวา","รายละเอียด ตาขวา",
-        "ผลรวม","คำแนะนำ","ส่งต่อ","อสม.","หมู่บ้าน"
-      ]);
-      var header = sheet.getRange(1,1,1,18);
-      header.setBackground("#0F6E56");
-      header.setFontColor("#ffffff");
-      header.setFontWeight("bold");
+      var headers = [
+        "วันที่/เวลา","ชื่อ-สกุล","อายุ","เพศ","เลขบัตร","เบอร์โทร",
+        "โรคประจำตัว","อาการทางตา","หมายเหตุ",
+        "รูปตาซ้าย (URL)","รูปตาขวา (URL)","อสม.","หมู่บ้าน"
+      ];
+      sheet.appendRow(headers);
+      var hr = sheet.getRange(1,1,1,headers.length);
+      hr.setBackground("#0F6E56");
+      hr.setFontColor("#ffffff");
+      hr.setFontWeight("bold");
+      sheet.setFrozenRows(1);
     }
-    
+
+
+    // Save images to Drive
+    var folder = DriveApp.getRootFolder();
+    try {
+      var folders = DriveApp.getFoldersByName("ตาใส-รูปภาพ");
+      folder = folders.hasNext() ? folders.next() : DriveApp.createFolder("ตาใส-รูปภาพ");
+    } catch(fe) {}
+
+
+    function saveImg(b64, name) {
+      if (!b64) return "";
+      try {
+        var bytes = Utilities.base64Decode(b64);
+        var blob = Utilities.newBlob(bytes, "image/jpeg", name);
+        var file = folder.createFile(blob);
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        return "https://drive.google.com/file/d/" + file.getId() + "/view";
+      } catch(ie) { return "บันทึกรูปไม่สำเร็จ"; }
+    }
+
+
+    var ts = new Date(data.timestamp);
+    var stamp = Utilities.formatDate(ts, "Asia/Bangkok", "yyyy-MM-dd HH:mm");
+    var safeName = data.name.replace(/[^ก-๙a-zA-Z0-9]/g,"_");
+    var urlL = saveImg(data.imgL, stamp + "_" + safeName + "_ตาซ้าย.jpg");
+    var urlR = saveImg(data.imgR, stamp + "_" + safeName + "_ตาขวา.jpg");
+
+
     sheet.appendRow([
       new Date(data.timestamp),
       data.name, data.age, data.gender,
       data.idCard || "-", data.phone || "-",
-      data.conditions,
-      data.leftStatus, data.leftConf + "%", data.leftDetail,
-      data.rightStatus, data.rightConf + "%", data.rightDetail,
-      data.overall, data.recommendation,
-      data.referred ? "ส่งต่อแล้ว" : "ยังไม่ส่ง",
+      data.conditions, data.symptoms, data.note || "-",
+      urlL, urlR,
       data.worker || "-", data.village || "-"
     ]);
-    
+
+
+    // Format image cells as links
+    var row = sheet.getLastRow();
+    if (urlL) sheet.getRange(row, 10).setFormula('=HYPERLINK("'+urlL+'","ดูรูปตาซ้าย")');
+    if (urlR) sheet.getRange(row, 11).setFormula('=HYPERLINK("'+urlR+'","ดูรูปตาขวา")');
+
+
     return ContentService
-      .createTextOutput(JSON.stringify({success:true}))
+      .createTextOutput(JSON.stringify({success:true, row:row}))
       .setMimeType(ContentService.MimeType.JSON);
   } catch(err) {
     return ContentService
@@ -489,60 +487,55 @@ const GAS_CODE = `function doPost(e) {
   }
 }
 
-function doGet(e) {
+
+function doGet() {
   return ContentService
-    .createTextOutput(JSON.stringify({status:"ok", message:"ตาใส API พร้อมใช้งาน"}))
+    .createTextOutput(JSON.stringify({status:"ok"}))
     .setMimeType(ContentService.MimeType.JSON);
 }`;
 
-// ════════════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════════════
-let eyeL = null, eyeR = null;
-let curScreen = 'form';
-let history = [];
-let stats = { total: 0, suspect: 0, refer: 0 };
-let curEntry = null;
 
-// ════════════════════════════════════════════════════
+// ════════════════════════════════
+// STATE
+// ════════════════════════════════
+let eyeL = null, eyeR = null;
+let curNav = 0;
+let records = [];
+
+
+// ════════════════════════════════
 // INIT
-// ════════════════════════════════════════════════════
+// ════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('gasCode').textContent = GAS_CODE;
-  loadSettings();
-  const cfg = getSettings();
-  if (!cfg.apiKey) {
-    showToast('กรุณาตั้งค่า API Key ก่อนใช้งาน');
-  }
-  loadHistory();
+  document.getElementById('gasCode').textContent = GAS;
+  loadCfg();
+  loadRecords();
 });
 
-function getSettings() {
+
+function getCfg() {
   return {
     sheetUrl: localStorage.getItem('ts_sheet') || '',
-    apiKey: localStorage.getItem('ts_key') || '',
     worker: localStorage.getItem('ts_worker') || '',
     village: localStorage.getItem('ts_village') || ''
   };
 }
 
-function loadSettings() {
-  const c = getSettings();
+
+function loadCfg() {
+  const c = getCfg();
   document.getElementById('cfgSheet').value = c.sheetUrl;
-  document.getElementById('cfgKey').value = c.apiKey;
   document.getElementById('cfgWorker').value = c.worker;
   document.getElementById('cfgVillage').value = c.village;
   if (c.worker) document.getElementById('hdrSub').textContent = c.worker;
 }
 
-function saveSettings() {
+
+function saveCfg() {
   const url = document.getElementById('cfgSheet').value.trim();
-  const key = document.getElementById('cfgKey').value.trim();
   const w = document.getElementById('cfgWorker').value.trim();
   const v = document.getElementById('cfgVillage').value.trim();
-  if (!key) { showToast('กรุณากรอก API Key'); return; }
   localStorage.setItem('ts_sheet', url);
-  localStorage.setItem('ts_key', key);
   localStorage.setItem('ts_worker', w);
   localStorage.setItem('ts_village', v);
   if (w) document.getElementById('hdrSub').textContent = w;
@@ -550,434 +543,306 @@ function saveSettings() {
   goNav(0);
 }
 
+
 function copyGAS() {
-  navigator.clipboard.writeText(GAS_CODE).then(() => showToast('คัดลอกโค้ด GAS แล้ว ✓')).catch(() => {
-    // fallback
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(GAS).then(() => showToast('คัดลอกโค้ดแล้ว ✓'));
+  } else {
     const el = document.createElement('textarea');
-    el.value = GAS_CODE;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    showToast('คัดลอกโค้ด GAS แล้ว ✓');
-  });
+    el.value = GAS; document.body.appendChild(el); el.select();
+    document.execCommand('copy'); document.body.removeChild(el);
+    showToast('คัดลอกโค้ดแล้ว ✓');
+  }
 }
 
-// ════════════════════════════════════════════════════
+
+// ════════════════════════════════
 // EYE IMAGE
-// ════════════════════════════════════════════════════
+// ════════════════════════════════
 function loadEye(e, side) {
   const f = e.target.files[0];
   if (!f) return;
-
-  // Show loading state immediately
   document.getElementById('ep'+side).innerHTML =
-    `<div class="eye-ph"><span class="ldots" style="color:#9FE1CB"><span></span><span></span><span></span></span><span style="color:#9FE1CB;font-size:11px">กำลังโหลด...</span></div>`;
+    `<div class="eye-ph"><span class="ldots" style="color:#9FE1CB"><span></span><span></span><span></span></span></div>`;
 
-  const objectUrl = URL.createObjectURL(f);
+
+  const url = URL.createObjectURL(f);
   const img = new Image();
+
 
   img.onload = () => {
     try {
-      const MAX = 1024;
-      let w = img.naturalWidth || img.width;
-      let h = img.naturalHeight || img.height;
-
-      // Fallback if dimensions are 0 (rare iOS bug)
-      if (!w || !h) { w = 800; h = 600; }
-
+      const MAX = 1200;
+      let w = img.naturalWidth || 800, h = img.naturalHeight || 600;
       if (w > MAX || h > MAX) {
         if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
         else { w = Math.round(w * MAX / h); h = MAX; }
       }
-
       const canvas = document.createElement('canvas');
-      canvas.width = w;
-      canvas.height = h;
+      canvas.width = w; canvas.height = h;
       const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = '#000'; ctx.fillRect(0,0,w,h);
       ctx.drawImage(img, 0, 0, w, h);
-
-      let dataUrl;
-      try {
-        dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      } catch(canvasErr) {
-        // Canvas tainted or toDataURL failed — use objectUrl directly via fetch
-        fetch(objectUrl)
-          .then(r => r.blob())
-          .then(blob => {
-            const fr = new FileReader();
-            fr.onload = fe => {
-              const du = fe.target.result;
-              const b64 = du.split(',')[1];
-              const mime = f.type || 'image/jpeg';
-              const obj = { b64, dataUrl: du, mime };
-              if (side === 'L') eyeL = obj; else eyeR = obj;
-              setEyePreview(side, du);
-            };
-            fr.readAsDataURL(blob);
-          });
-        URL.revokeObjectURL(objectUrl);
-        return;
-      }
-
-      const b64 = dataUrl.split(',')[1];
-      const obj = { b64, dataUrl, mime: 'image/jpeg' };
-      if (side === 'L') eyeL = obj; else eyeR = obj;
-      setEyePreview(side, dataUrl);
-    } catch(err) {
-      // Final fallback: read file directly as base64
-      const fr = new FileReader();
-      fr.onload = fe => {
-        const du = fe.target.result;
-        const b64 = du.split(',')[1];
-        const mime = f.type && f.type.startsWith('image/') ? f.type : 'image/jpeg';
-        const obj = { b64, dataUrl: du, mime };
-        if (side === 'L') eyeL = obj; else eyeR = obj;
-        setEyePreview(side, du);
-      };
-      fr.onerror = () => showToast('ไม่สามารถโหลดภาพได้ กรุณาลองใหม่');
-      fr.readAsDataURL(f);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+      setEye(side, dataUrl.split(',')[1], dataUrl);
+    } catch {
+      readDirect(f, side);
     }
-    URL.revokeObjectURL(objectUrl);
+    URL.revokeObjectURL(url);
   };
-
-  img.onerror = () => {
-    URL.revokeObjectURL(objectUrl);
-    // Fallback: read directly without canvas (works for most formats)
-    const fr = new FileReader();
-    fr.onload = fe => {
-      const du = fe.target.result;
-      const b64 = du.split(',')[1];
-      const mime = f.type && f.type.startsWith('image/') ? f.type : 'image/jpeg';
-      const obj = { b64, dataUrl: du, mime };
-      if (side === 'L') eyeL = obj; else eyeR = obj;
-      setEyePreview(side, du);
-    };
-    fr.onerror = () => showToast('ไม่สามารถโหลดภาพได้ กรุณาลองใหม่');
-    fr.readAsDataURL(f);
-  };
-
-  img.src = objectUrl;
+  img.onerror = () => { URL.revokeObjectURL(url); readDirect(f, side); };
+  img.src = url;
 }
 
-function setEyePreview(side, dataUrl) {
+
+function readDirect(f, side) {
+  const fr = new FileReader();
+  fr.onload = ev => {
+    const du = ev.target.result;
+    setEye(side, du.split(',')[1], du);
+  };
+  fr.onerror = () => showToast('โหลดรูปไม่สำเร็จ กรุณาลองใหม่');
+  fr.readAsDataURL(f);
+}
+
+
+function setEye(side, b64, dataUrl) {
+  const obj = { b64, dataUrl };
+  if (side === 'L') eyeL = obj; else eyeR = obj;
   document.getElementById('ec'+side).classList.add('ok');
   document.getElementById('ep'+side).innerHTML =
-    `<img src="${dataUrl}" style="width:100%;height:100%;object-fit:cover"><div class="eye-badge ok">✓ พร้อม</div>`;
+    `<img src="${dataUrl}" style="width:100%;height:100%;object-fit:cover"><div class="ebadge">✓ พร้อม</div>`;
 }
 
-// ════════════════════════════════════════════════════
-// ANALYSIS
-// ════════════════════════════════════════════════════
-async function analyze() {
-  if (!eyeL && !eyeR) { showToast('ถ่ายภาพดวงตาอย่างน้อย 1 ข้างก่อน'); return; }
-  if (!document.getElementById('pName').value.trim()) { showToast('กรุณากรอกชื่อผู้รับการคัดกรอง'); return; }
-  const cfg = getSettings();
-  if (!cfg.apiKey) { showToast('กรุณาตั้งค่า API Key ในเมนูตั้งค่า'); return; }
 
-  showScreen('analyzing');
-
+// ════════════════════════════════
+// SUBMIT
+// ════════════════════════════════
+async function submitForm() {
   const name = document.getElementById('pName').value.trim();
+  if (!name) { showToast('กรุณากรอกชื่อผู้รับการคัดกรอง'); return; }
+  if (!eyeL && !eyeR) { showToast('กรุณาถ่ายภาพดวงตาอย่างน้อย 1 ข้าง'); return; }
+
+
+  const cfg = getCfg();
   const age = document.getElementById('pAge').value || '-';
   const gender = document.getElementById('pGender').value || '-';
-  const idCard = document.getElementById('pID').value.trim();
-  const phone = document.getElementById('pPhone').value.trim();
-  const conds = [...document.querySelectorAll('.cbox-item input:checked')].map(c=>c.value).join(', ') || 'ไม่มี';
+  const idCard = document.getElementById('pID').value.trim() || '-';
+  const phone = document.getElementById('pPhone').value.trim() || '-';
+  const conds = [...document.querySelectorAll('.cb-grp input:checked')].map(c=>c.value).join(', ') || 'ไม่ระบุ';
+  const symptoms = [...document.querySelectorAll('#scr-form .card:nth-child(4) input:checked')].map(c=>c.value).join(', ') || 'ไม่ระบุ';
+  const note = document.getElementById('pNote').value.trim() || '-';
+  const ts = new Date().toISOString();
 
-  const msgs = [];
-  if (eyeL) {
-    msgs.push({ type:'image', source:{ type:'base64', media_type:eyeL.mime, data:eyeL.b64 } });
-    msgs.push({ type:'text', text:'ภาพที่ 1: ตาซ้าย (Left Eye)' });
-  }
-  if (eyeR) {
-    msgs.push({ type:'image', source:{ type:'base64', media_type:eyeR.mime, data:eyeR.b64 } });
-    msgs.push({ type:'text', text:'ภาพที่ 2: ตาขวา (Right Eye)' });
-  }
-  msgs.push({ type:'text', text:`ผู้ป่วย: ${name}, อายุ ${age} ปี, ${gender}, โรคประจำตัว: ${conds}
 
-คุณเป็นผู้ช่วยคัดกรองทางจักษุวิทยา วิเคราะห์ภาพดวงตาเพื่อคัดกรองต้อกระจก (Cataract) เบื้องต้น
-
-วิเคราะห์และตอบเป็น JSON เท่านั้น (ไม่มีข้อความอื่น ไม่มี markdown):
-{
-  "leftEye": {
-    "status": "normal|suspect|high|not_provided|not_eye",
-    "confidence": 0-100,
-    "finding": "สิ่งที่พบในภาพ ภาษาไทย 1-2 ประโยค",
-    "detail": "รายละเอียดเพิ่มเติมถ้ามี"
-  },
-  "rightEye": { (เหมือนกัน) },
-  "overall": "normal|suspect|high",
-  "recommendation": "คำแนะนำหลัก ภาษาไทย",
-  "recommendationDetail": "รายละเอียด ภาษาไทย",
-  "urgency": "routine|soon|urgent"
-}
-status: normal=ปกติ, suspect=สงสัยต้อกระจก, high=สงสัยรุนแรง, not_provided=ไม่มีภาพ, not_eye=ไม่ใช่ภาพดวงตา` });
-
-  setStep(2);
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': cfg.apiKey, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{ role:'user', content:msgs }] })
-    });
-    const data = await res.json();
-    if (data.error) throw new Error(data.error.message);
-    const raw = data.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
-    const result = JSON.parse(raw);
-
-    setStep(3);
-    document.getElementById('anaStatus').innerHTML = 'บันทึกข้อมูล<span class="ldots"><span></span><span></span><span></span></span>';
-
-    const entry = { name, age, gender, idCard, phone, conditions: conds, result, eyeL, eyeR,
-      worker: cfg.worker, village: cfg.village, timestamp: new Date().toISOString(), referred: false };
-    curEntry = entry;
-
-    // Save to Google Sheets
-    let gsOk = false;
-    if (cfg.sheetUrl) {
-      try {
-        const payload = {
-          timestamp: entry.timestamp, name, age, gender, idCard, phone, conditions: conds,
-          leftStatus: statusTH(result.leftEye?.status), leftConf: result.leftEye?.confidence||0, leftDetail: result.leftEye?.finding||'-',
-          rightStatus: statusTH(result.rightEye?.status), rightConf: result.rightEye?.confidence||0, rightDetail: result.rightEye?.finding||'-',
-          overall: statusTH(result.overall), recommendation: result.recommendation||'-',
-          referred: false, worker: cfg.worker, village: cfg.village
-        };
-        await fetch(cfg.sheetUrl, { method:'POST', body: JSON.stringify(payload) });
-        gsOk = true;
-      } catch(e2) { console.warn('GS error', e2); }
-    }
-    entry.gsOk = gsOk;
-
-    // Local history
-    history.unshift(entry);
-    saveHistory();
-    updateStats(result.overall);
-    await new Promise(r => setTimeout(r, 600));
-    showResultScreen(entry);
-  } catch(err) {
-    console.error(err);
-    showScreen('form');
-    showToast('เกิดข้อผิดพลาด: ' + err.message.substring(0,60));
-  }
-}
-
-function statusTH(s) {
-  return {normal:'ปกติ', suspect:'สงสัยต้อกระจก', high:'สงสัยรุนแรง', not_provided:'ไม่มีภาพ', not_eye:'ไม่ใช่ภาพดวงตา'}[s] || s || '-';
-}
-function statusClass(s) { return {normal:'normal',suspect:'suspect',high:'high',not_provided:'normal',not_eye:'normal'}[s]||'normal'; }
-function statusLabel(s) { return {normal:'✓ ปกติ', suspect:'⚠ สงสัยต้อกระจก', high:'⚠ สงสัยรุนแรง', not_provided:'ไม่มีภาพ', not_eye:'ไม่ใช่ภาพดวงตา'}[s]||s||'-'; }
-
-function setStep(n) {
-  [2,3].forEach(i => {
-    const el = document.getElementById('s'+i+'i');
-    if (i < n) { el.className='step-ico done-ico'; el.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>'; }
-    else if (i === n) { el.className='step-ico run'; el.innerHTML='<div style="width:8px;height:8px;border-radius:50%;background:var(--amber)"></div>'; }
-  });
-}
-
-// ════════════════════════════════════════════════════
-// RESULT SCREEN
-// ════════════════════════════════════════════════════
-function showResultScreen(e) {
-  document.getElementById('rAv').textContent = e.name.charAt(0)||'?';
-  document.getElementById('rName').textContent = e.name;
-  document.getElementById('rInfo').textContent = `อายุ ${e.age} ปี | ${e.gender} | ${e.conditions}`;
-
-  const gsEl = document.getElementById('rGs');
-  if (e.gsOk) gsEl.innerHTML = '<div class="gs-dot" style="background:#1D9E75"></div><span style="font-size:11px;color:var(--green)">บันทึกแล้ว</span>';
-  else if (!getSettings().sheetUrl) gsEl.innerHTML = '<div class="gs-dot" style="background:var(--muted)"></div><span style="font-size:11px;color:var(--muted)">ไม่ได้ตั้งค่า Sheet</span>';
-  else gsEl.innerHTML = '<div class="gs-dot" style="background:var(--red)"></div><span style="font-size:11px;color:var(--red)">บันทึกไม่สำเร็จ</span>';
-
-  const r = e.result;
-  let html = '';
-  const eyes = [{key:'leftEye',label:'👁 ตาซ้าย'},{key:'rightEye',label:'👁 ตาขวา'}];
-  eyes.forEach(eye => {
-    const d = r[eye.key];
-    if (!d || d.status === 'not_provided') return;
-    const sc = statusClass(d.status);
-    html += `<div class="rbox ${sc}">
-      <div class="r-eye-lbl">${eye.label}</div>
-      <div class="r-status ${sc}">${statusLabel(d.status)}</div>
-      <div class="r-detail">${d.finding||''}</div>
-      ${d.detail?`<div style="font-size:12px;color:var(--muted);margin-top:4px">${d.detail}</div>`:''}
-      <div class="conf-bar"><div class="conf-fill ${sc}" style="width:${d.confidence||0}%"></div></div>
-      <div class="conf-lbl">ความเชื่อมั่น: ${d.confidence||0}%</div>
-    </div>`;
-  });
-  document.getElementById('rResults').innerHTML = html;
-  document.getElementById('rRecMain').textContent = r.recommendation||'-';
-  document.getElementById('rRecSub').textContent = r.recommendationDetail||'';
-
-  const btnRef = document.getElementById('btnRef');
-  if (r.overall === 'suspect' || r.overall === 'high') btnRef.style.display='flex';
-  else btnRef.style.display='none';
-
-  let imgH = '';
-  if (e.eyeL) imgH += `<div style="border-radius:10px;overflow:hidden"><img src="${e.eyeL.dataUrl}" style="width:100%;height:88px;object-fit:cover"><div style="font-size:11px;text-align:center;padding:4px;background:var(--bg);color:var(--muted)">ตาซ้าย</div></div>`;
-  if (e.eyeR) imgH += `<div style="border-radius:10px;overflow:hidden"><img src="${e.eyeR.dataUrl}" style="width:100%;height:88px;object-fit:cover"><div style="font-size:11px;text-align:center;padding:4px;background:var(--bg);color:var(--muted)">ตาขวา</div></div>`;
-  document.getElementById('rImgs').innerHTML = imgH;
-
-  showScreen('result');
-}
-
-// ════════════════════════════════════════════════════
-// REFER
-// ════════════════════════════════════════════════════
-async function refer() {
-  const cfg = getSettings();
-  const btn = document.getElementById('btnRef');
-  if (curEntry) {
-    curEntry.referred = true;
-    if (cfg.sheetUrl) {
-      try {
-        const payload = { ...buildPayload(curEntry), referred: true, updateRefer: true, name: curEntry.name, timestamp: curEntry.timestamp };
-        await fetch(cfg.sheetUrl, { method:'POST', body: JSON.stringify(payload) });
-      } catch(e) {}
-    }
-    history = history.map(h => h.timestamp === curEntry.timestamp ? {...h, referred:true} : h);
-    saveHistory();
-    renderHistory();
-    stats.refer++;
-    updateStatsUI();
-  }
-  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ส่งต่อแล้ว';
-  btn.style.background = 'var(--green)';
-  btn.disabled = true;
-  showToast('บันทึกการส่งต่อแล้ว ✓');
-}
-
-function buildPayload(e) {
-  const r = e.result;
-  return {
-    timestamp: e.timestamp, name: e.name, age: e.age, gender: e.gender,
-    idCard: e.idCard, phone: e.phone, conditions: e.conditions,
-    leftStatus: statusTH(r.leftEye?.status), leftConf: r.leftEye?.confidence||0, leftDetail: r.leftEye?.finding||'-',
-    rightStatus: statusTH(r.rightEye?.status), rightConf: r.rightEye?.confidence||0, rightDetail: r.rightEye?.finding||'-',
-    overall: statusTH(r.overall), recommendation: r.recommendation||'-',
-    referred: e.referred||false, worker: e.worker, village: e.village
+  const payload = {
+    timestamp: ts, name, age, gender, idCard, phone,
+    conditions: conds, symptoms, note,
+    imgL: eyeL ? eyeL.b64 : null,
+    imgR: eyeR ? eyeR.b64 : null,
+    worker: cfg.worker, village: cfg.village
   };
-}
 
-// ════════════════════════════════════════════════════
-// HISTORY
-// ════════════════════════════════════════════════════
-function saveHistory() {
+
+  // Save locally first
+  const record = { ...payload, imgL: null, imgR: null,
+    thumbL: eyeL ? eyeL.dataUrl : null,
+    thumbR: eyeR ? eyeR.dataUrl : null,
+    status: 'pending' };
+  records.unshift(record);
+  saveRecords();
+
+
+  showScreen('sending');
+  setProgress(10, 'กำลังเตรียมข้อมูล...');
+
+
+  if (!cfg.sheetUrl) {
+    await delay(800);
+    setProgress(100, 'บันทึกในเครื่องแล้ว (ไม่มี Sheet URL)');
+    records[0].status = 'local';
+    saveRecords();
+    showSuccess(name, age, gender, 'บันทึกในเครื่องแล้ว\n(ตั้งค่า Sheet URL เพื่อส่งข้อมูล)');
+    return;
+  }
+
+
   try {
-    const slim = history.map(h => ({...h, eyeL: h.eyeL ? {dataUrl:h.eyeL.dataUrl} : null, eyeR: h.eyeR ? {dataUrl:h.eyeR.dataUrl} : null}));
-    localStorage.setItem('ts_hist', JSON.stringify(slim.slice(0,50)));
-  } catch(e) {}
+    setProgress(30, 'กำลังส่งข้อมูลและรูปภาพ...');
+    await delay(400);
+    setProgress(60, 'กำลังบันทึกรูปภาพใน Drive...');
+
+
+    const res = await fetch(cfg.sheetUrl, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+
+
+    setProgress(100, 'ส่งสำเร็จ!');
+    records[0].status = json.success ? 'sent' : 'failed';
+    saveRecords();
+    await delay(400);
+    showSuccess(name, age, gender, json.success
+      ? 'ส่งข้อมูลและรูปภาพไปยัง Google Sheets เรียบร้อยแล้ว'
+      : 'บันทึกในเครื่องแล้ว แต่ส่ง Sheet ไม่สำเร็จ');
+  } catch (err) {
+    setProgress(100, 'บันทึกในเครื่องแล้ว');
+    records[0].status = 'failed';
+    saveRecords();
+    await delay(300);
+    showSuccess(name, age, gender, 'บันทึกในเครื่องแล้ว\nจะลองส่งอีกครั้งได้ในหน้าประวัติ');
+  }
+  updateStats();
+  renderHistory();
 }
 
-function loadHistory() {
+
+function showSuccess(name, age, gender, msg) {
+  document.getElementById('sucSub').textContent = msg;
+  const cfg = getCfg();
+  document.getElementById('sucSummary').innerHTML = `
+    <div class="sum-row"><span class="sum-lbl">ชื่อ</span><span class="sum-val">${name}</span></div>
+    <div class="sum-row"><span class="sum-lbl">อายุ / เพศ</span><span class="sum-val">${age} ปี / ${gender}</span></div>
+    <div class="sum-row"><span class="sum-lbl">รูปตาซ้าย</span><span class="sum-val">${eyeL?'✓ มีรูป':'—'}</span></div>
+    <div class="sum-row"><span class="sum-lbl">รูปตาขวา</span><span class="sum-val">${eyeR?'✓ มีรูป':'—'}</span></div>
+    <div class="sum-row"><span class="sum-lbl">บันทึกโดย</span><span class="sum-val">${cfg.worker||'—'}</span></div>
+    <div class="sum-row"><span class="sum-lbl">หมู่บ้าน</span><span class="sum-val">${cfg.village||'—'}</span></div>`;
+  showScreen('success');
+}
+
+
+function setProgress(pct, lbl) {
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progLbl').textContent = lbl;
+}
+
+
+// ════════════════════════════════
+// HISTORY & RETRY
+// ════════════════════════════════
+function saveRecords() {
   try {
-    const stored = JSON.parse(localStorage.getItem('ts_hist') || '[]');
-    history = stored;
-    stats.total = stored.length;
-    stats.suspect = stored.filter(h => h.result?.overall !== 'normal').length;
-    stats.refer = stored.filter(h => h.referred).length;
-    renderHistory();
-    updateStatsUI();
-  } catch(e) {}
+    localStorage.setItem('ts_rec', JSON.stringify(records.slice(0,100)));
+  } catch {}
 }
 
-function updateStats(overall) {
-  stats.total++;
-  if (overall === 'suspect' || overall === 'high') stats.suspect++;
-  updateStatsUI();
+
+function loadRecords() {
+  try {
+    records = JSON.parse(localStorage.getItem('ts_rec') || '[]');
+    updateStats(); renderHistory();
+  } catch { records = []; }
 }
 
-function updateStatsUI() {
-  document.getElementById('stTotal').textContent = stats.total;
-  document.getElementById('stSusp').textContent = stats.suspect;
-  document.getElementById('stRef').textContent = stats.refer;
+
+function updateStats() {
+  const sent = records.filter(r=>r.status==='sent').length;
+  const fail = records.filter(r=>r.status==='failed'||r.status==='pending').length;
+  document.getElementById('stTotal').textContent = records.length;
+  document.getElementById('stSent').textContent = sent;
+  document.getElementById('stFail').textContent = fail;
+  document.getElementById('retryBanner').style.display = fail > 0 ? 'block' : 'none';
 }
+
+
+async function retryFailed() {
+  const cfg = getCfg();
+  if (!cfg.sheetUrl) { showToast('กรุณาตั้งค่า Sheet URL ก่อน'); return; }
+  const failed = records.filter(r=>r.status==='failed'||r.status==='pending');
+  if (!failed.length) { showToast('ไม่มีข้อมูลที่ค้างอยู่'); return; }
+  showToast(`กำลังส่ง ${failed.length} รายการ...`);
+  let ok = 0;
+  for (const r of failed) {
+    try {
+      const res = await fetch(cfg.sheetUrl, { method:'POST', body: JSON.stringify({
+        ...r, imgL: null, imgR: null
+      })});
+      const j = await res.json();
+      if (j.success) { r.status = 'sent'; ok++; }
+    } catch {}
+  }
+  saveRecords(); updateStats(); renderHistory();
+  showToast(`ส่งสำเร็จ ${ok}/${failed.length} รายการ`);
+}
+
 
 function renderHistory() {
-  if (!history.length) {
-    document.getElementById('histList').innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><p>ยังไม่มีประวัติ<br>ข้อมูลจะบันทึกลง Google Sheets อัตโนมัติ</p></div>`;
+  if (!records.length) {
+    document.getElementById('histList').innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>ยังไม่มีข้อมูล<br>กดบันทึกในหน้าแรก</p></div>`;
     return;
   }
   let html = '';
-  history.slice(0,30).forEach(h => {
-    const ov = h.result?.overall||'normal';
-    const pc = ov==='normal'?'pill-ok':ov==='high'?'pill-ref':'pill-warn';
-    const pt = ov==='normal'?'✓ ปกติ':ov==='high'?'⚠ รุนแรง':'⚠ สงสัย';
-    const d = new Date(h.timestamp);
+  records.slice(0,40).forEach(r => {
+    const d = new Date(r.timestamp);
     const timeStr = d.toLocaleString('th-TH',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+    const pc = r.status==='sent'?'p-sent':r.status==='local'?'p-pend':'p-fail';
+    const pt = r.status==='sent'?'✓ ส่งแล้ว':r.status==='local'?'เฉพาะเครื่อง':'⚠ ส่งไม่สำเร็จ';
+    const hasImg = (r.thumbL||r.thumbR) ? `<div style="display:flex;gap:4px;margin-top:5px">${r.thumbL?`<img src="${r.thumbL}" style="width:32px;height:24px;object-fit:cover;border-radius:4px">`:''} ${r.thumbR?`<img src="${r.thumbR}" style="width:32px;height:24px;object-fit:cover;border-radius:4px">`:''}</div>` : '';
     html += `<div class="hi">
-      <div class="hi-av">${h.name.charAt(0)||'?'}</div>
+      <div class="hi-av">${r.name.charAt(0)||'?'}</div>
       <div style="flex:1">
-        <div class="hi-name">${h.name}</div>
-        <div class="hi-sub">อายุ ${h.age} ปี • ${timeStr}</div>
-        ${h.village?`<div class="hi-sub">${h.village}</div>`:''}
+        <div class="hi-name">${r.name}</div>
+        <div class="hi-sub">อายุ ${r.age} ปี • ${r.gender} • ${timeStr}</div>
+        ${r.village?`<div class="hi-sub">${r.village}</div>`:''}
+        ${hasImg}
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-        <span class="pill ${pc}">${pt}</span>
-        ${h.referred?'<span style="font-size:10px;color:var(--muted)">ส่งต่อแล้ว</span>':''}
-        <span style="font-size:10px;color:${h.gsOk===false?'var(--red)':'var(--green)'}">${h.gsOk===false?'⚠ ไม่บันทึก Sheet':h.gsOk?'✓ Sheet':''}  </span>
-      </div>
+      <span class="pill ${pc}">${pt}</span>
     </div>`;
   });
   document.getElementById('histList').innerHTML = html;
 }
 
-// ════════════════════════════════════════════════════
+
+// ════════════════════════════════
 // NAVIGATION
-// ════════════════════════════════════════════════════
+// ════════════════════════════════
 function showScreen(name) {
-  document.querySelectorAll('.scr').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('active'));
   document.getElementById('scr-'+name).classList.add('active');
-  curScreen = name;
-  const steps = ['form','analyzing','result'];
-  const idx = steps.indexOf(name);
-  for (let i=0;i<3;i++) {
-    const d=document.getElementById('d'+i);
-    d.className='sdot';
-    if(i<idx)d.classList.add('done');
-    else if(i===idx)d.classList.add('on');
-  }
-  document.getElementById('stepBar').style.display = (name==='hist'||name==='settings')?'none':'flex';
 }
+
 
 function goNav(idx) {
-  document.querySelectorAll('.nbtn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-  if (idx===0) { if(curScreen==='hist'||curScreen==='settings') showScreen('form'); }
-  else if (idx===1) { renderHistory(); showScreen('hist'); }
-  else { showScreen('settings'); }
+  curNav = idx;
+  document.querySelectorAll('.nb').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  const screens = ['form','hist','cfg'];
+  showScreen(screens[idx]);
+  if (idx===1) { updateStats(); renderHistory(); }
 }
 
-function reset() {
-  eyeL=null; eyeR=null; curEntry=null;
-  ['pName','pAge','pPhone','pID'].forEach(id=>document.getElementById(id).value='');
+
+function resetForm() {
+  eyeL = null; eyeR = null;
+  ['pName','pAge','pPhone','pID','pNote'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('pGender').value='';
-  document.querySelectorAll('.cbox-item input').forEach(c=>c.checked=false);
+  document.querySelectorAll('#scr-form input[type=checkbox]').forEach(c=>c.checked=false);
   ['L','R'].forEach(side=>{
     document.getElementById('ec'+side).classList.remove('ok');
-    document.getElementById('ep'+side).innerHTML=`<div class="eye-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="26" height="26"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>แตะเพื่อถ่าย / อัปโหลด</span></div>`;
-    // Replace input element entirely so same file can be re-selected
-    const oldInput = document.getElementById('f'+side);
-    const newInput = document.createElement('input');
-    newInput.type = 'file';
-    newInput.id = 'f' + side;
-    newInput.accept = 'image/*';
-    newInput.style.display = 'none';
-    newInput.addEventListener('change', function(e){ loadEye(e, side); });
-    oldInput.parentNode.replaceChild(newInput, oldInput);
+    document.getElementById('ep'+side).innerHTML=`<div class="eye-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="26" height="26"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>แตะเพื่อถ่าย / เลือกรูป</span></div>`;
+    const old = document.getElementById('f'+side);
+    const neo = document.createElement('input');
+    neo.type='file'; neo.id='f'+side; neo.accept='image/*'; neo.style.display='none';
+    neo.addEventListener('change', ev=>loadEye(ev,side));
+    old.parentNode.replaceChild(neo, old);
   });
-  showScreen('form');
   goNav(0);
+  showScreen('form');
 }
+
+
+function delay(ms) { return new Promise(r=>setTimeout(r,ms)); }
+
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 2800);
 }
 </script>
 </body>
 </html>
+
+
+
